@@ -1,77 +1,25 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Serpiente aleatoria</title>
+	<title>Serpiente</title>
 	<style>
-		#grid {
-			display: grid;
-			grid-template-columns: repeat(10, 1fr);
-			grid-template-rows: repeat(10, 1fr);
-			grid-gap: 1px;
-			background-color: #ccc;
-			padding: 10px;
+		#container {
+			position: relative;
+			width: 500px;
+			height: 500px;
+			border: 1px solid black;
+			margin: 0 auto;
 		}
 		.snake {
+			position: absolute;
 			background-color: green;
-			border-radius: 50%;
+			width: 10px;
+			height: 10px;
 		}
 	</style>
 </head>
 <body>
-	<div id="grid"></div>
-
-	<script>
-		const grid = document.getElementById('grid');
-		const snake = document.createElement('div');
-		snake.className = 'snake';
-
-		let snakePosition = { x: 5, y: 5 };
-		let direction = '';
-		let intervalId;
-
-		function moveSnake() {
-			const directions = ['up', 'down', 'left', 'right'];
-			const randomDirection = directions[Math.floor(Math.random() * directions.length)];
-
-			switch (randomDirection) {
-				case 'up':
-					snakePosition.y--;
-					break;
-				case 'down':
-					snakePosition.y++;
-					break;
-				case 'left':
-					snakePosition.x--;
-					break;
-				case 'right':
-					snakePosition.x++;
-					break;
-			}
-
-			// Wrap snake around the grid if it goes out of bounds
-			if (snakePosition.x < 0) snakePosition.x = 9;
-			if (snakePosition.x > 9) snakePosition.x = 0;
-			if (snakePosition.y < 0) snakePosition.y = 9;
-			if (snakePosition.y > 9) snakePosition.y = 0;
-
-			// Move snake to new position
-			snake.style.gridColumn = snakePosition.x + 1;
-			snake.style.gridRow = snakePosition.y + 1;
-		}
-
-		function startGame() {
-			grid.appendChild(snake);
-
-			intervalId = setInterval(() => {
-				moveSnake();
-			}, 500);
-		}
-
-		function stopGame() {
-			clearInterval(intervalId);
-		}
-
-		startGame();
-	</script>
+	<div id="container"></div>
+	<script src="serpiente.js"></script>
 </body>
 </html>
