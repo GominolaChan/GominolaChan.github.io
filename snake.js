@@ -47,10 +47,3 @@ function moveBall() {
 
 // llama a la función moveBall cada 10 milisegundos para crear la animación
 setInterval(moveBall, 10);
-Este código utiliza el elemento canvas de HTML5 y el contexto 2D para dibujar un círculo que se mueve aleatoriamente por la pantalla. La función drawBall() dibuja el círculo en la posición actual, mientras que la función moveBall() borra el canvas, dibuja el círculo en la nueva posición y cambia la dirección si llega a los bordes del canvas. Finalmente, la función setInterval() llama a moveBall() cada 10 milisegundos para crear la animación.
-
-
-
-
-
-
