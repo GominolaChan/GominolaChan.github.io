@@ -1,51 +1,30 @@
-var juego = document.getElementById("juego");
-var segmentos = [{x: 10, y: 10}, {x: 10, y: 15}, {x: 10, y: 20}]; // Posiciones iniciales de la serpiente
-var direccion = "abajo";
-var movimiento;
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
 
-function actualizarJuego() {
-  // Mover la serpiente
-  var cabeza = segmentos[0];
-  switch (direccion) {
-    case "arriba":
-      cabeza = {x: cabeza.x, y: cabeza.y - 5};
-      break;
-    case "abajo":
-      cabeza = {x: cabeza.x, y: cabeza.y + 5};
-      break;
-    case "izquierda":
-      cabeza = {x: cabeza.x - 5, y: cabeza.y};
-      break;
-    case "derecha":
-      cabeza = {x: cabeza.x + 5, y: cabeza.y};
-      break;
-  }
-  segmentos.unshift(cabeza);
-  segmentos.pop();
+// set up snake initial position and size
+let snake = [{ x: 0, y: 0 }, { x: 5, y: 0 }, { x: 10, y: 0 }];
+let snakeSize = 5;
 
-  // Actualizar la posición de los segmentos en la pantalla
-  for (var i = 0; i < segmentos.length; i++) {
-    var segmento = document.getElementById("segmento" + i);
-    segmento.style.left = segmentos[i].x + "px";
-    segmento.style.top = segmentos[i].y + "px";
+// set up initial velocity
+let velocity = { x: 1, y: 0 };
+
+// set up game loop
+setInterval(() => {
+  // update snake position
+  for (let i = snake.length - 1; i > 0; i--) {
+    snake[i].x = snake[i - 1].x;
+    snake[i].y = snake[i - 1].y;
   }
 
-  // Comprobar si la serpiente ha chocado con las paredes
-  var cabezaX = segmentos[0].x;
-  var cabezaY = segmentos[0].y;
-  if (cabezaX < 0 || cabezaX >= 400 || cabezaY < 0 || cabezaY >= 400) {
-    clearInterval(movimiento);
-    alert("Game over!");
+  snake[0].x += velocity.x * snakeSize;
+  snake[0].y += velocity.y * snakeSize;
+
+  // clear canvas
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  // draw snake
+  ctx.fillStyle = "green";
+  for (let i = 0; i < snake.length; i++) {
+    ctx.fillRect(snake[i].x, snake[i].y, snakeSize, snakeSize);
   }
-}
-
-// Iniciar el movimiento de la serpiente
-movimiento = setInterval(actualizarJuego, 25);
-
-// Cambiar la dirección de la serpiente cuando se pulsan las teclas de dirección
-document.onkeydown = function(event) {
-  switch (event.keyCode) {
-    case 38: // Tecla de flecha hacia arriba
-      direccion = "arriba";
-      break;
-    case 40: // Tecla de flecha hacia abajo
+}, 1000 / 30); // update at 30 fps
