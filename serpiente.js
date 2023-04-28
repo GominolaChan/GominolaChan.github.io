@@ -1,30 +1,15 @@
-const canvas = document.getElementById("canvas");
+const canvas = document.getElementById("myCanvas");
 const ctx = canvas.getContext("2d");
+const x = 100; // posición inicial del texto en el eje x
+let y = 100; // posición inicial del texto en el eje y
+let dy = 2; // velocidad del movimiento en el eje y
 
-const snakeSize = 5;
-let snake = [{ x: 10, y: 10 }];
-
-function drawSnake() {
-  for (let i = 0; i < snake.length; i++) {
-    ctx.fillRect(snake[i].x, snake[i].y, snakeSize, snakeSize);
-  }
+function draw() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height); // limpiamos el canvas
+  ctx.font = "40px Arial";
+  ctx.fillStyle = "blue";
+  ctx.fillText("JosueED", x, y); // dibujamos el texto en la posición actual
+  y += dy; // actualizamos la posición del texto en el eje y
 }
 
-function moveSnake() {
-  let dx = snakeSize;
-  let dy = 0;
-  snake.unshift({ x: snake[0].x + dx, y: snake[0].y + dy });
-  snake.pop();
-}
-
-function clearCanvas() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-}
-
-function gameLoop() {
-  clearCanvas();
-  moveSnake();
-  drawSnake();
-}
-
-setInterval(gameLoop, 100);
+setInterval(draw, 10); // llamamos a la función draw cada 10 milisegundos
